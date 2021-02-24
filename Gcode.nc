@@ -2,7 +2,7 @@
 $H
 G90 G20
 G0 X0 Y0
-G0 Z0
+G0 Z0 
 
 (start of the rows along x axis movement)
 G01 X0.2 Y15 F800
