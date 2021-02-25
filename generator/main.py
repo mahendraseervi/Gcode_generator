@@ -73,7 +73,7 @@ G0 X0 Y0
         if(self.xoffset == "" or self.yoffset == "" or self.xyspeed == "" or self.zspeed == ""
            or self.xyextracut == "" or self.cutdepth == "" or self.inputlength == "" or self.inputwidth == ""
            or self.inputthickness == "" or self.outputlength == "" or  self.outputwidth == ""):
-            self.show_popup()
+            self.show_popup_nullvalue()
 
         self.val_xoffset = float(self.xoffset)
         self.val_yoffset = float(self.yoffset)
@@ -87,6 +87,10 @@ G0 X0 Y0
         self.val_outputlength = float(self.outputlength)
         self.val_outputwidth = float(self.outputwidth)
 
+        if(self.val_inputlength < 12 or self.val_inputlength > 96 or self.val_inputwidth < 12 or self.val_inputwidth > 48
+           or self.val_outputlength < 1 or self.val_outputlength > 96 or self.val_outputwidth < 1 or self.val_outputwidth > 48):
+            self.show_popup_overvalue()
+
         self.find_rows_columns()
         self.create_file()
 
@@ -95,22 +99,37 @@ G0 X0 Y0
         self.no_columns = int((self.val_inputwidth - 0.1)/self.val_outputwidth)
         # print("created no of rows and columns")
 
-    def show_popup(self):
+    def show_popup_nullvalue(self):
         msg = QMessageBox()
         msg.setWindowTitle("Error while generating Gcode")
         msg.setText("Fill all the Text box")
         msg.setIcon(QMessageBox.Critical)
         msg.setStandardButtons(QMessageBox.Retry | QMessageBox.Cancel)
 
-        msg.buttonClicked.connect(self.popup_button)
+        msg.buttonClicked.connect(self.popup_button_nullvalue)
         x = msg.exec_()
 
-    def popup_button(self, i):
+    def popup_button_nullvalue(self, i):
         if (i.text() == "Cancel"):
             exit()
         if (i.text() == "Retry"):
             exit()
 
+    def show_popup_overvalue(self):
+        msg = QMessageBox()
+        msg.setWindowTitle("Error while generating Gcode")
+        msg.setText("Over value, Please Enter the correct value")
+        msg.setIcon(QMessageBox.Critical)
+        msg.setStandardButtons(QMessageBox.Retry | QMessageBox.Cancel)
+
+        msg.buttonClicked.connect(self.popup_button_overvalue)
+        x = msg.exec_()
+
+    def popup_button_overvalue(self, i):
+        if (i.text() == "Cancel"):
+            exit()
+        if (i.text() == "Retry"):
+            exit()
 
     # Function to convert
     def listToString(self, s):
