@@ -126,6 +126,7 @@ G01 Z{} F{}\n\n""".format((self.val_outputwidth) * (y+1), self.val_yoffset, self
         f.close()
 
         self.label_finshed.setText("Finished")
+        self.label_finshed.setStyleSheet("background-color: lightgreen")
         print("End of the code")
 
 if __name__ == '__main__':
