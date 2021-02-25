@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 
 from generator_ui import Ui_MainWindow
+from fractions import Fraction
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):
@@ -70,6 +71,9 @@ G0 X0 Y0
         self.outputlength = self.lineEdit_outputlength.text()
         self.outputwidth = self.lineEdit_outputwidth.text()
 
+        self.comoutputlength = self.comboBox_outputlength.currentText()
+        self.comoutputidth = self.comboBox_outputwidth.currentText()
+
         if(self.xoffset == "" or self.yoffset == "" or self.xyspeed == "" or self.zspeed == ""
            or self.xyextracut == "" or self.cutdepth == "" or self.inputlength == "" or self.inputwidth == ""
            or self.inputthickness == "" or self.outputlength == "" or  self.outputwidth == ""):
@@ -87,6 +91,9 @@ G0 X0 Y0
         self.val_outputlength = float(self.outputlength)
         self.val_outputwidth = float(self.outputwidth)
 
+        self.val_comoutputlength = float(Fraction(self.comoutputlength))
+        self.val_comoutputwidth = float(Fraction(self.comoutputidth))
+
         if(self.val_inputlength < 12 or self.val_inputlength > 96 or self.val_inputwidth < 12 or self.val_inputwidth > 48
            or self.val_outputlength < 1 or self.val_outputlength > 96 or self.val_outputwidth < 1 or self.val_outputwidth > 48):
             self.show_popup_overvalue()
@@ -95,8 +102,8 @@ G0 X0 Y0
         self.create_file()
 
     def find_rows_columns(self):
-        self.no_rows = int((self.val_inputlength - 0.1)/self.val_outputlength)
-        self.no_columns = int((self.val_inputwidth - 0.1)/self.val_outputwidth)
+        self.no_rows = int((self.val_inputlength - 0.1)/(self.val_outputlength + self.val_comoutputlength))
+        self.no_columns = int((self.val_inputwidth - 0.1)/(self.val_outputwidth + self.val_comoutputwidth))
         # print("created no of rows and columns")
 
     def show_popup_nullvalue(self):
@@ -145,7 +152,7 @@ G0 X0 Y0
             self.new_row_string = """G01 X{} Y{} F{}
 G01 Z-{} F{}
 G01 X{} F{}
-G01 Z{} F{}\n\n""".format(self.val_xoffset, (self.val_outputlength * (x+1)), self.val_xyspeed,
+G01 Z{} F{}\n\n""".format(self.val_xoffset, ((self.val_outputlength + self.val_comoutputlength) * (x+1)), self.val_xyspeed,
                                self.val_cutdepth, self.val_zspeed,
                                self.val_inputwidth + self.val_xyextracut, self.val_xyspeed,
                                self.val_cutdepth, self.val_zspeed)
@@ -160,7 +167,7 @@ G01 Z{} F{}\n\n""".format(self.val_xoffset, (self.val_outputlength * (x+1)), sel
             new_column_string = """G01 X{} Y{} F{}
 G01 Z-{} F{}
 G01 y{} F{}
-G01 Z{} F{}\n\n""".format((self.val_outputwidth) * (y+1), self.val_yoffset, self.val_xyspeed,
+G01 Z{} F{}\n\n""".format(((self.val_outputwidth + self.val_comoutputwidth) * (y+1)), self.val_yoffset, self.val_xyspeed,
                                self.val_cutdepth, self.val_zspeed,
                                self.val_inputlength + self.val_xyextracut, self.val_xyspeed,
                                self.val_cutdepth, self.val_zspeed)
