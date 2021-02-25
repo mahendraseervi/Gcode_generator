@@ -15,11 +15,11 @@ G90 G20
 G0 X0 Y0
 G0 Z0 \n
 """
+
         self.end_home_position = """(Move back to work position)
 G0 Z0.85
 G0 X0 Y0
 """
-
         self.xoffset = ""
         self.yoffset = ""
         self.xyspeed = ""
@@ -31,6 +31,18 @@ G0 X0 Y0
         self.inputthickness = ""
         self.outputlength = ""
         self.outputwidth = ""
+
+        self.val_xoffset = 0.0
+        self.val_yoffset = 0.0
+        self.val_xyspeed = 0.0
+        self.val_zspeed = 0.0
+        self.val_xyextracut = 0.0
+        self.val_cutdepth = 0.0
+        self.val_inputlength = 0.0
+        self.val_inputwidth = 0.0
+        self.val_inputthickness = 0.0
+        self.val_outputlength = 0.0
+        self.val_outputwidth = 0.0
 
         self.data_x = []
         self.data_y = []
@@ -47,16 +59,25 @@ G0 X0 Y0
         self.zspeed = self.lineEdit_zspeed.text()
         self.xyextracut = self.lineEdit_xyextracut.text()
         self.cutdepth = self.lineEdit_cutdepth.text()
-
         self.inputlength = self.lineEdit_inputlength.text()
         self.inputwidth = self.lineEdit_inputwidth.text()
         self.inputthickness = self.lineEdit_thickness.text()
-
         self.outputlength = self.lineEdit_outputlength.text()
         self.outputwidth = self.lineEdit_outputwidth.text()
+
+        self.val_xoffset = float(self.xoffset)
+        self.val_yoffset = float(self.yoffset)
+        self.val_xyspeed = float(self.xyspeed)
+        self.val_zspeed = float(self.zspeed)
+        self.val_xyextracut = float(self.xyextracut)
+        self.val_cutdepth = float(self.cutdepth)
+        self.val_inputlength = float(self.inputlength)
+        self.val_inputwidth = float(self.inputwidth)
+        self.val_inputthickness = float(self.inputthickness)
+        self.val_outputlength = float(self.outputlength)
+        self.val_outputwidth = float(self.outputwidth)
         # print(self.xoffset, self.yoffset, self.xyspeed, self.zspeed, self.xyextracut, self.cutdepth)
         # print(self.inputlength, self.inputwidth, self.inputthickness, self.outputlength, self.outputwidth)
-
         self.create_file()
 
     # Function to convert
@@ -73,10 +94,10 @@ G0 X0 Y0
             self.new_row_string = """G01 X{} Y{} F{}
 G01 Z-{} F{}
 G01 X{} F{}
-G01 Z{} F{}\n\n""".format(self.xoffset, (self.outputlength * (x+1)), self.xyspeed,
-                               self.cutdepth, self.zspeed,
-                               self.outputwidth + self.xyextracut, self.xyspeed,
-                               self.cutdepth, self.zspeed)
+G01 Z{} F{}\n\n""".format(self.val_xoffset, (self.val_outputlength * (x+1)), self.val_xyspeed,
+                               self.val_cutdepth, self.val_zspeed,
+                               self.val_outputwidth + self.val_xyextracut, self.val_xyspeed,
+                               self.val_cutdepth, self.val_zspeed)
             self.data_x.append(self.new_row_string)
 
         return self.listToString(self.data_x)
@@ -88,10 +109,10 @@ G01 Z{} F{}\n\n""".format(self.xoffset, (self.outputlength * (x+1)), self.xyspee
             new_column_string = """G01 X{} Y{} F{}
 G01 Z-{} F{}
 G01 y{} F{}
-G01 Z{} F{}\n\n""".format((self.outputwidth * (y+1)), self.yoffset, self.xyspeed,
-                               self.cutdepth, self.zspeed,
-                               self.outputlength + self.xyextracut, self.xyspeed,
-                               self.cutdepth, self.zspeed)
+G01 Z{} F{}\n\n""".format((self.val_outputwidth) * (y+1), self.val_yoffset, self.val_xyspeed,
+                               self.val_cutdepth, self.val_zspeed,
+                               self.val_outputlength + self.val_xyextracut, self.val_xyspeed,
+                               self.val_cutdepth, self.val_zspeed)
             self.data_y.append(new_column_string)
 
         return self.listToString(self.data_y)
@@ -103,6 +124,8 @@ G01 Z{} F{}\n\n""".format((self.outputwidth * (y+1)), self.yoffset, self.xyspeed
         f.write(self.y_columns(self.no_columns))          # start of the columns (along y movement)
         f.write(self.end_home_position)             # End of Gode -- return to home
         f.close()
+
+        self.label_finshed.setText("Finished")
         print("End of the code")
 
 if __name__ == '__main__':

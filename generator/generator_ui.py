@@ -399,7 +399,7 @@ class Ui_MainWindow(object):
 
         self.label_5.setText(_translate("MainWindow", "(In mm)"))
         self.pushButton_visualize.setText(_translate("MainWindow", "Visualize"))
-        self.label_finshed.setText(_translate("MainWindow", "Finished"))
+        self.label_finshed.setText(_translate("MainWindow", "yet to Finish"))
         self.pushButton_submit.setText(_translate("MainWindow", "submit"))
 
 
