@@ -102,7 +102,7 @@ G0 X0 Y0
     def show_popup_nullvalue(self):
         msg = QMessageBox()
         msg.setWindowTitle("Error while generating Gcode")
-        msg.setText("Fill all the Text box")
+        msg.setText("Null vaule, please fill all the Text box")
         msg.setIcon(QMessageBox.Critical)
         msg.setStandardButtons(QMessageBox.Retry | QMessageBox.Cancel)
 
@@ -118,7 +118,7 @@ G0 X0 Y0
     def show_popup_overvalue(self):
         msg = QMessageBox()
         msg.setWindowTitle("Error while generating Gcode")
-        msg.setText("Over value, Please Enter the correct value")
+        msg.setText("Over value, please enter the correct value")
         msg.setIcon(QMessageBox.Critical)
         msg.setStandardButtons(QMessageBox.Retry | QMessageBox.Cancel)
 
