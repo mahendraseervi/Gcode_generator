@@ -46,8 +46,8 @@ G0 X0 Y0
 
         self.data_x = []
         self.data_y = []
-        self.no_rows = 2
-        self.no_columns = 1
+        self.no_rows = 0
+        self.no_columns = 0
 
         self.pushButton_generate.clicked.connect(self.operator_save)
         self.show()
@@ -78,7 +78,14 @@ G0 X0 Y0
         self.val_outputwidth = float(self.outputwidth)
         # print(self.xoffset, self.yoffset, self.xyspeed, self.zspeed, self.xyextracut, self.cutdepth)
         # print(self.inputlength, self.inputwidth, self.inputthickness, self.outputlength, self.outputwidth)
+        self.find_rows_columns()
         self.create_file()
+
+    def find_rows_columns(self):
+        self.no_rows = int((self.val_inputlength - 0.1)/self.val_outputlength)
+        self.no_columns = int((self.val_inputwidth - 0.1)/self.val_outputwidth)
+        # print("created no of rows and columns")
+
 
     # Function to convert
     def listToString(self, s):
@@ -96,7 +103,7 @@ G01 Z-{} F{}
 G01 X{} F{}
 G01 Z{} F{}\n\n""".format(self.val_xoffset, (self.val_outputlength * (x+1)), self.val_xyspeed,
                                self.val_cutdepth, self.val_zspeed,
-                               self.val_outputwidth + self.val_xyextracut, self.val_xyspeed,
+                               self.val_inputwidth + self.val_xyextracut, self.val_xyspeed,
                                self.val_cutdepth, self.val_zspeed)
             self.data_x.append(self.new_row_string)
 
@@ -111,7 +118,7 @@ G01 Z-{} F{}
 G01 y{} F{}
 G01 Z{} F{}\n\n""".format((self.val_outputwidth) * (y+1), self.val_yoffset, self.val_xyspeed,
                                self.val_cutdepth, self.val_zspeed,
-                               self.val_outputlength + self.val_xyextracut, self.val_xyspeed,
+                               self.val_inputlength + self.val_xyextracut, self.val_xyspeed,
                                self.val_cutdepth, self.val_zspeed)
             self.data_y.append(new_column_string)
 
