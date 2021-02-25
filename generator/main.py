@@ -132,7 +132,7 @@ G01 Z{} F{}\n\n""".format((self.val_outputwidth) * (y+1), self.val_yoffset, self
         f.write(self.end_home_position)             # End of Gode -- return to home
         f.close()
 
-        self.label_finshed.setText("Finished")
+        self.label_finshed.setText("Generated")
         self.label_finshed.setStyleSheet("background-color: lightgreen")
         print("End of the code")
 

@@ -298,7 +298,7 @@ class Ui_MainWindow(object):
         self.pushButton_visualize.setFont(font)
         self.pushButton_visualize.setObjectName("pushButton_visualize")
         self.label_finshed = QtWidgets.QLabel(self.centralwidget)
-        self.label_finshed.setGeometry(QtCore.QRect(270, 520, 81, 21))
+        self.label_finshed.setGeometry(QtCore.QRect(270, 520, 90, 21))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
@@ -399,7 +399,7 @@ class Ui_MainWindow(object):
 
         self.label_5.setText(_translate("MainWindow", "(In mm)"))
         self.pushButton_visualize.setText(_translate("MainWindow", "Visualize"))
-        self.label_finshed.setText(_translate("MainWindow", "yet to Finish"))
+        self.label_finshed.setText(_translate("MainWindow", "yet to generate"))
         self.label_finshed.setStyleSheet("background-color: pink")
 
         self.pushButton_submit.setText(_translate("MainWindow", "submit"))
