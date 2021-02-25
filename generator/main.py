@@ -49,8 +49,13 @@ G0 X0 Y0
         self.no_rows = 0
         self.no_columns = 0
 
-        self.pushButton_generate.clicked.connect(self.operator_save)
+        self.actions()
         self.show()
+
+    def actions(self):
+        self.pushButton_generate.clicked.connect(self.operator_save)
+        self.pushButton_generate.setCheckable(True)
+        self.pushButton_generate.toggle()
 
     def operator_save(self):
         self.xoffset = self.lineEdit_xoffset.text()
@@ -65,6 +70,11 @@ G0 X0 Y0
         self.outputlength = self.lineEdit_outputlength.text()
         self.outputwidth = self.lineEdit_outputwidth.text()
 
+        if(self.xoffset == "" or self.yoffset == "" or self.xyspeed == "" or self.zspeed == ""
+           or self.xyextracut == "" or self.cutdepth == "" or self.inputlength == "" or self.inputwidth == ""
+           or self.inputthickness == "" or self.outputlength == "" or  self.outputwidth == ""):
+            self.show_popup()
+
         self.val_xoffset = float(self.xoffset)
         self.val_yoffset = float(self.yoffset)
         self.val_xyspeed = float(self.xyspeed)
@@ -76,8 +86,7 @@ G0 X0 Y0
         self.val_inputthickness = float(self.inputthickness)
         self.val_outputlength = float(self.outputlength)
         self.val_outputwidth = float(self.outputwidth)
-        # print(self.xoffset, self.yoffset, self.xyspeed, self.zspeed, self.xyextracut, self.cutdepth)
-        # print(self.inputlength, self.inputwidth, self.inputthickness, self.outputlength, self.outputwidth)
+
         self.find_rows_columns()
         self.create_file()
 
@@ -85,6 +94,22 @@ G0 X0 Y0
         self.no_rows = int((self.val_inputlength - 0.1)/self.val_outputlength)
         self.no_columns = int((self.val_inputwidth - 0.1)/self.val_outputwidth)
         # print("created no of rows and columns")
+
+    def show_popup(self):
+        msg = QMessageBox()
+        msg.setWindowTitle("Error while generating Gcode")
+        msg.setText("Fill all the Text box")
+        msg.setIcon(QMessageBox.Critical)
+        msg.setStandardButtons(QMessageBox.Retry | QMessageBox.Cancel)
+
+        msg.buttonClicked.connect(self.popup_button)
+        x = msg.exec_()
+
+    def popup_button(self, i):
+        if (i.text() == "Cancel"):
+            exit()
+        if (i.text() == "Retry"):
+            exit()
 
 
     # Function to convert
