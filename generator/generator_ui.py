@@ -17,18 +17,6 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
 
-        self.xoffset = ""
-        self.yoffset = ""
-        self.xyspeed = ""
-        self.zspeed = ""
-        self.xyextracut = ""
-        self.cutdepth = ""
-        self.inputlength = ""
-        self.inputwidth = ""
-        self.inputthickness = ""
-        self.outputlength = ""
-        self.outputlength = ""
-
         self.label_heading2 = QtWidgets.QLabel(self.centralwidget)
         self.label_heading2.setGeometry(QtCore.QRect(50, 270, 201, 31))
         font = QtGui.QFont()
@@ -75,7 +63,6 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.pushButton_generate.setFont(font)
         self.pushButton_generate.setObjectName("pushButton_generate")
-        self.pushButton_generate.clicked.connect(self.operator_save)
 
         self.comboBox_admindimension = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox_admindimension.setGeometry(QtCore.QRect(340, 60, 69, 22))
@@ -415,27 +402,6 @@ class Ui_MainWindow(object):
         self.label_finshed.setText(_translate("MainWindow", "Finished"))
         self.pushButton_submit.setText(_translate("MainWindow", "submit"))
 
-    def operator_save(self):
-        self.xoffset = self.lineEdit_xoffset.text()
-        self.yoffset = self.lineEdit_yoffset.text()
-        self.xyspeed = self.lineEdit_xyspeed.text()
-        self.zspeed = self.lineEdit_zspeed.text()
-        self.xyextracut = self.lineEdit_xyextracut.text()
-        self.cutdepth = self.lineEdit_cutdepth.text()
-
-        self.inputlength = self.lineEdit_inputlength.text()
-        self.inputwidth = self.lineEdit_inputwidth.text()
-        self.inputthickness = self.lineEdit_thickness.text()
-
-        self.outputlength = self.lineEdit_outputlength.text()
-        self.outputlength = self.lineEdit_outputwidth.text()
-        # print(xoffset, yoffset, xyspeed, zspeed, xyextracut, cutdepth)
-        # print(inputlength, inputwidth, inputthickness, outputlength, outputlength)
-        testing(self)
-
-    def testing(self):
-        print(self.xoffset, self.yoffset, self.xyspeed, self.zspeed, self.xyextracut, self.cutdepth)
-
 
 if __name__ == "__main__":
     import sys
@@ -443,8 +409,6 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
-
-    # ui.testing()
 
     MainWindow.show()
     sys.exit(app.exec_())
